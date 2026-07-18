@@ -1,0 +1,46 @@
+# Caches and Byte-compiled files
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Environments (Virtualenv, Poetry, UV, Pipenv)
+.venv/
+venv/
+ENV/
+env/
+.python-version
+# Keep your dependency lockfiles, but ignore local environments
+# .lock files should generally be committed (e.g., poetry.lock, uv.lock)
+
+# Configuration & Environment Secrets (NEVER COMMIT THESE)
+.env
+.env.*
+!.env.example
+secrets.json
+
+# Databases & Storage
+*.db
+*.sqlite3
+data/
+storage/
+uploads/
+
+# IDEs and Editors
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Operating System Files
+.DS_Store
+Thumbs.db
+# SQLite databases
+*.db
+*.sqlite
+*.sqlite3
