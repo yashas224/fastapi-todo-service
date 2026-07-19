@@ -1,7 +1,7 @@
 from fastapi.testclient import TestClient
 from dependencies import get_db_session
 from main import app
-from routers.auth import get_current_user
+from routers.todos import get_current_user
 from test.test_database import load_db, override_sessionLocal
 from sqlalchemy import select
 from models import Todos

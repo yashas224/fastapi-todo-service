@@ -50,7 +50,7 @@ def load_db():
         first_name="John",
         last_name="Doe",
         is_active=True,
-        role="user",
+        role="admin",
         hashed_password="test_hashed_password",
     )
     todo.user = user
