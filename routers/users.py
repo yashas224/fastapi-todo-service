@@ -14,13 +14,28 @@ router = APIRouter(dependencies=[Depends(get_current_user)], prefix="/user", tag
 user_dependency = Annotated[Users, Depends(get_current_user)]
 
 
+class UserResponse(BaseModel):
+    first_name: str
+    last_name: str
+    email: str
+    username: str
+    role: str
+
+
 class UpdatePassword(BaseModel):
     password: str = Field(max_length=30, min_length=5)
 
 
 @router.get("/", status_code=status.HTTP_200_OK)
 async def get_user_details(current_user: user_dependency, db_session: db_dependency):
-    return db_session.scalars(select(Users).where(Users.id == current_user.id)).first()
+    model: Users = db_session.scalars(select(Users).where(Users.id == current_user.id)).first()
+    return UserResponse(
+        first_name=model.first_name,
+        last_name=model.last_name,
+        email=model.email,
+        username=model.username,
+        role=model.role
+    )
 
 
 @router.put("/update/password", status_code=status.HTTP_204_NO_CONTENT)

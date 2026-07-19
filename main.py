@@ -28,6 +28,12 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(lifespan=lifespan)
 
+
+@app.get("/health")
+def health():
+    return {"message": "Todo service healthy"}
+
+
 app.include_router(auth.router)
 app.include_router(todos.router)
 app.include_router(admin.router)

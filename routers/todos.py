@@ -32,9 +32,6 @@ class TodoRequest(BaseModel):
     )
 
 
-@router.get("/health")
-def health():
-    return {"message": "Todo service healthy"}
 
 
 @router.get("/todos")
