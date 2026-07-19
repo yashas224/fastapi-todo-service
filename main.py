@@ -6,7 +6,7 @@ from fastapi import FastAPI
 import models
 from database import engine, sessionLocal
 from models import Todos
-from routers import auth, todos, admin
+from routers import auth, todos, admin, users
 
 
 # init Application function
@@ -31,6 +31,7 @@ app = FastAPI(lifespan=lifespan)
 app.include_router(auth.router)
 app.include_router(todos.router)
 app.include_router(admin.router)
+app.include_router(users.router)
 
 # Debugging purpose
 if __name__ == "__main__":
