@@ -3,7 +3,7 @@ from sqlalchemy import create_engine
 from sqlalchemy import delete
 from sqlalchemy import select
 from sqlalchemy.orm import sessionmaker
-
+from utils import password_util
 import models
 from models import Todos, Users
 
@@ -51,7 +51,7 @@ def load_db():
         last_name="Doe",
         is_active=True,
         role="admin",
-        hashed_password="test_hashed_password",
+        hashed_password=password_util.hash_password("test12")
     )
     todo.user = user
 

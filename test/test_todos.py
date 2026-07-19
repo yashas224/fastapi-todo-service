@@ -5,10 +5,9 @@ from routers.todos import get_current_user
 from test.test_database import load_db, override_sessionLocal
 from sqlalchemy import select
 from models import Todos
+from test.test_database import override_get_db_session, override_get_current_user
 
 client = TestClient(app)
-
-from test.test_database import override_get_db_session, override_get_current_user
 
 app.dependency_overrides[get_db_session] = override_get_db_session
 app.dependency_overrides[get_current_user] = override_get_current_user

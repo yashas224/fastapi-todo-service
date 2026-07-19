@@ -1,6 +1,6 @@
 from typing import Annotated
 
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException
 from fastapi import status, Depends
 from pydantic import BaseModel, Field
 from sqlalchemy import select
@@ -23,7 +23,8 @@ class UserResponse(BaseModel):
 
 
 class UpdatePassword(BaseModel):
-    password: str = Field(max_length=30, min_length=5)
+    currentPassword: str = Field(max_length=30, min_length=5)
+    newPassword: str = Field(max_length=30, min_length=5)
 
 
 @router.get("/", status_code=status.HTTP_200_OK)
@@ -40,5 +41,9 @@ async def get_user_details(current_user: user_dependency, db_session: db_depende
 
 @router.put("/update/password", status_code=status.HTTP_204_NO_CONTENT)
 async def update_password(req_obj: UpdatePassword, db_session: db_dependency, current_user: user_dependency):
-    current_user.hashed_password = password_util.hash_password(req_obj.password)
-    db_session.commit()
+    isMatch: bool = password_util.verify_password(req_obj.currentPassword, current_user.hashed_password)
+    if isMatch:
+        current_user.hashed_password = password_util.hash_password(req_obj.newPassword)
+        db_session.commit()
+    else:
+        raise HTTPException(status_code=401, detail="")
