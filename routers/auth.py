@@ -47,7 +47,7 @@ def create_access_token(data: dict, expires_delta: timedelta | None = None):
     return encoded_jwt
 
 
-def get_current_user(token: Annotated[str, Depends(oauth2_scheme)], db_session: db_dependency):
+def get_current_user(token: Annotated[str, Depends(oauth2_scheme)], db_session: db_dependency) -> Users:
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
         username = payload.get("sub")
@@ -60,7 +60,7 @@ def get_current_user(token: Annotated[str, Depends(oauth2_scheme)], db_session: 
         else:
             raise
     except:
-        HTTPException(
+        raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Could not validate credentials",
             headers={"WWW-Authenticate": "Bearer"},
@@ -105,7 +105,8 @@ async def get_token(authenticate_user: Annotated[Users, Depends(authenticate_use
     if authenticate_user:
         access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
         access_token = create_access_token(
-            data={"sub": authenticate_user.username, "id": authenticate_user.id}, expires_delta=access_token_expires
+            data={"sub": authenticate_user.username, "id": authenticate_user.id, "role": authenticate_user.role},
+            expires_delta=access_token_expires
         )
         return Token(
             access_token=access_token,
