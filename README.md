@@ -11,6 +11,11 @@ It provides authentication, user-specific todo operations, and admin-level contr
 - Create, read, update, and delete personal todos
 - Admin can view all users’ todos and delete any todo
 
+## Product Demo
+[View Product Demo](/product-demo.md)
+
+
+
 ## FastAPI Components Used
 
 - **`FastAPI` App**: Main application setup and startup lifecycle
